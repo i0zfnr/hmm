@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>for my girl</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1b2735 0%, #090a0f 100%);
+      font-family: "Poppins", sans-serif;
+      color: white;
+      overflow: hidden;
+      flex-direction: column;
+      text-align: center;
+      position: relative;
+    }
+
+    .container {
+      max-width: 600px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      z-index: 1;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    p {
+      font-size: 1.2em;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #ff4b5c, #ff6b81);
+      border: none;
+      color: white;
+      padding: 12px 28px;
+      font-size: 1em;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(255, 75, 92, 0.4);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(255, 75, 92, 0.6);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .message {
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+      max-width: 500px;
+      line-height: 1.6;
+      transform: translateY(20px);
+      margin-top: 20px;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255, 100, 130, 0.6);
+      animation: float 10s linear infinite;
+      font-size: 1.5em;
+      text-shadow: 0 0 10px rgba(255, 100, 130, 0.5);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Music control button */
+    #musicControl {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      z-index: 10;
+      transition: all 0.3s ease;
+      font-size: 0.9em;
+    }
+
+    #musicControl:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* Flower petals */
+    .petals {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.7);
+      animation: floatPetals 15s linear infinite;
+      font-size: 1.2em;
+    }
+
+    @keyframes floatPetals {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Confetti effect */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #f00;
+      opacity: 0;
+      z-index: 2;
+    }
+
+    /* Progress bar for forgiveness */
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin: 20px 0;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ff4b5c, #ff6b81);
+      width: 0%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    /* Typing effect */
+    .typing {
+      overflow: hidden;
+      border-right: 2px solid rgba(255, 255, 255, 0.75);
+      white-space: nowrap;
+      margin: 0 auto;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: rgba(255, 255, 255, 0.75) }
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      p {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+  <div class="petals" id="petals"></div>
+
+  <!-- <button id="musicControl">🎵 Pause Music</button> -->
+
+  <div class="container">
+    <h1 class="typing">i messed up…</h1>
+    <p>and im so sorry for everything</p>
+    
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <button class="btn" id="forgiveBtn">forgive me?</button>
+
+    <div class="message" id="message">
+      <h2>i'm truly sorry for my action i did it to you</h2>
+      <p>
+        i know i hurt you, and thats the last thing i ever wanted.<br />
+        i know i was wrong and i take full responsibility for my actions.<br />
+        but please believe me, im not choose you as a second choise.<br />
+        i really care about you and love you so much.<br />
+        i regret what i did and i wish i could take it back.<br />
+        i know i broke your trust and i don't expect you to forgive me right away.<br />
+        but please give me a chance to make things right.<br />
+        im trully sorry from the bottom of my heart.<br />
+        i promise to learn from my mistake and be a better person for you.<br />
+        please forgive me.<br />
+        i beg you.<br />
+        can we start over again?<br />
+        i still love you irin — deeply, honestly.<br />
+        you deserve the best and i wasnt the best last night.<br />
+        i just want us to be okay again. 
+      </p>
+    </div>
+  </div>
+
+  <!-- Background music -->
+  <!-- <audio id="bgMusic" autoplay loop>
+    <source src="drake-omg.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio> -->
+
+  <script>
+    const btn = document.getElementById("forgiveBtn");
+    const message = document.getElementById("message");
+    const heartsContainer = document.getElementById("hearts");
+    const petalsContainer = document.getElementById("petals");
+    const bgMusic = document.getElementById("bgMusic");
+    const musicControl = document.getElementById("musicControl");
+    const progressContainer = document.getElementById("progressContainer");
+    const progressBar = document.getElementById("progressBar");
+
+    // Create floating hearts
+    for (let i = 0; i < 25; i++) {
+      createHeart();
+    }
+
+    // Create floating petals
+    for (let i = 0; i < 15; i++) {
+      createPetal();
+    }
+
+    // Forgive button interaction
+    let clickCount = 0;
+    btn.addEventListener("click", () => {
+      clickCount++;
+      
+      if (clickCount === 1) {
+        // First click - show progress bar
+        progressContainer.style.display = 'block';
+        setTimeout(() => {
+          progressBar.style.width = '33%';
+        }, 100);
+        
+        btn.textContent = "Please Forgive Me?";
+      } else if (clickCount === 2) {
+        // Second click - progress further
+        progressBar.style.width = '66%';
+        btn.textContent = "I Promise I'll Do Better!";
+      } else if (clickCount === 3) {
+        // Third click - show message and confetti
+        progressBar.style.width = '100%';
+        setTimeout(() => {
+          message.classList.add('show');
+          btn.style.display = "none";
+          createConfetti();
+        }, 500);
+      }
+    });
+
+    // Create heart element
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 6 + Math.random() * 4 + "s";
+      heart.style.fontSize = 1 + Math.random() * 1.5 + "em";
+      heart.style.animationDelay = Math.random() * 5 + "s";
+      heartsContainer.appendChild(heart);
+    }
+
+    // Create petal element
+    function createPetal() {
+      const petal = document.createElement("div");
+      petal.className = "petal";
+      petal.innerHTML = "❀";
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.animationDuration = 10 + Math.random() * 10 + "s";
+      petal.style.fontSize = 0.8 + Math.random() * 1 + "em";
+      petal.style.animationDelay = Math.random() * 10 + "s";
+      petalsContainer.appendChild(petal);
+    }
+
+    // Create confetti effect
+    // function createConfetti() {
+    //   const colors = ['#ff4b5c', '#ff6b81', '#ffd3d3', '#ffffff', '#ffeb3b'];
+    //   const confettiCount = 150;
+      
+    //   for (let i = 0; i < confettiCount; i++) {
+    //     const confetti = document.createElement('div');
+    //     confetti.className = 'confetti';
+    //     confetti.style.left = Math.random() * 100 + 'vw';
+    //     confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    //     confetti.style.width = (5 + Math.random() * 10) + 'px';
+    //     confetti.style.height = (5 + Math.random() * 10) + 'px';
+    //     confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    //     document.body.appendChild(confetti);
+        
+        // Animate confetti
+    //     const animation = confetti.animate([
+    //       { transform: 'translateY(-20px) rotate(0deg)', opacity: 1 },
+    //       { transform: `translateY(${window.innerHeight}px) rotate(${360 + Math.random() * 360}deg)`, opacity: 0 }
+    //     ], {
+    //       duration: 1000 + Math.random() * 3000,
+    //       easing: 'cubic-bezier(0.1, 0.2, 0.8, 0.9)'
+    //     });
+        
+    //     // Remove confetti after animation
+    //     animation.onfinish = () => {
+    //       confetti.remove();
+    //     };
+    //   }
+    // }
+
+    // Music control
+    musicControl.addEventListener("click", () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicControl.textContent = "🎵 Pause Music";
+      } else {
+        bgMusic.pause();
+        musicControl.textContent = "▶️ Play Music";
+      }
+    });
+
+    // Add some interactive background elements on mouse move
+    document.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      document.body.style.background = `linear-gradient(${135 + x * 10}deg, #1b2735 0%, #090a0f 100%)`;
+    });
+  </script>
+</body>
+</html>
